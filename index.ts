@@ -7,6 +7,7 @@ import * as ioUtil from '@actions/io/lib/io-util'
 const DEFAULT_DEPLOY_BRANCH = 'master'
 
 async function run(): Promise<void> {
+  console.log('Hello World!')
   try {
     const accessToken = core.getInput('access-token')
     if (!accessToken) {
