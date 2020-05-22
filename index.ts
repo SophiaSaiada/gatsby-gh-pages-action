@@ -18,6 +18,8 @@ async function run(): Promise<void> {
     }
 
     let deployBranch = core.getInput('deploy-branch')
+    const dependenciesToUpdate = core.getInput('dependencies-to-update')
+
     if (!deployBranch) deployBranch = DEFAULT_DEPLOY_BRANCH
 
     if (github.context.ref === `refs/heads/${deployBranch}`) {
@@ -30,6 +32,14 @@ async function run(): Promise<void> {
     console.log(`Installing your site's dependencies using ${pkgManager}.`)
     await exec.exec(`${pkgManager} install`)
     console.log('Finished installing dependencies.')
+
+    console.log(`Updating specific dependency(/ies) (${dependenciesToUpdate}) using ${pkgManager}.`)
+    if (dependenciesToUpdate === '*') {
+      await exec.exec(`${pkgManager} update`)
+    } else if (dependenciesToUpdate !== '') {
+      await exec.exec(`${pkgManager} update ${dependenciesToUpdate}`)
+    }
+    console.log('Finished updating dependencies.')
 
     let gatsbyArgs = core.getInput('gatsby-args').split(/\s+/).filter(Boolean)
     if (gatsbyArgs.length > 0) {

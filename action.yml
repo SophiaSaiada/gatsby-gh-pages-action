@@ -23,6 +23,11 @@ inputs:
     description: "Builds your Gatsby site but skips publishing by setting it to `true`. Helpful for testing/debugging Workflows."
     required: false
     default: false
+  dependencies-to-update:
+    description: "Specific dependencies (separated by a space) that need to be updated before build."
+    required: false
+    default: ""
+    
 runs:
   using: "node12"
   main: "./dist/index.js"
